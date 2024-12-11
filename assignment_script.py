@@ -1,4 +1,7 @@
 import pandas as pd
+import pymc as pm
+import numpy as np
+import arviz as az
 
 # Load the dataset
 url = "https://github.com/dustywhite7/Econ8310/raw/master/AssignmentData/cookie_cats.csv"
@@ -13,10 +16,8 @@ grouped_data = data.groupby('version').agg(
     retention7_count=('retention_7', 'count')
 ).reset_index()
 print(grouped_data)
-# Prepare the model 
-import pymc as pm
-import numpy as np
 
+# Prepare the model 
 # Define Bayesian model for retention1
 with pm.Model() as retention1_model:
 # Priors for probabilities
@@ -54,9 +55,8 @@ diff_retention7 = pm.Deterministic("diff_retention_7", p_treatment - p_control)
 
 # Sampling
 retention7_trace = pm.sample(2000, return_inferencedata=True)
-# Analyze and visualyze 
-import arviz as az
 
+# Analyze and visualyze 
 # Posterior summaries
 print(az.summary(retention1_trace, var_names=["diff_retention_1"]))
 print(az.summary(retention7_trace, var_names=["diff_retention_7"]))
