@@ -19,42 +19,42 @@ import numpy as np
 
 # Define Bayesian model for retention1
 with pm.Model() as retention1_model:
-    # Priors for probabilities
-    p_control = pm.Beta("p_control", alpha=1, beta=1)
-    p_treatment = pm.Beta("p_treatment", alpha=1, beta=1)
+# Priors for probabilities
+ p_control = pm.Beta("p_control", alpha=1, beta=1)
+ p_treatment = pm.Beta("p_treatment", alpha=1, beta=1)
 
-    # Observed data
-    control_data = data[data['version'] == 'gate_30']['retention_1']
-    treatment_data = data[data['version'] == 'gate_40']['retention_1']
+# Observed data
+control_data = data[data['version'] == 'gate_30']['retention_1']
+treatment_data = data[data['version'] == 'gate_40']['retention_1']
 
-    obs_control = pm.Binomial("obs_control", n=len(control_data), p=p_control, observed=control_data.sum())
-    obs_treatment = pm.Binomial("obs_treatment", n=len(treatment_data), p=p_treatment, observed=treatment_data.sum())
+obs_control = pm.Binomial("obs_control", n=len(control_data), p=p_control, observed=control_data.sum())
+obs_treatment = pm.Binomial("obs_treatment", n=len(treatment_data), p=p_treatment, observed=treatment_data.sum())
 
-    # Difference in probabilities
-    diff_retention1 = pm.Deterministic("diff_retention_1", p_treatment - p_control)
+# Difference in probabilities
+diff_retention1 = pm.Deterministic("diff_retention_1", p_treatment - p_control)
 
-    # Sampling
-    retention1_trace = pm.sample(2000, return_inferencedata=True)
+# Sampling
+retention1_trace = pm.sample(2000, return_inferencedata=True)
 
 # Define Bayesian model for retention7
 with pm.Model() as retention7_model:
-    # Priors for probabilities
-    p_control = pm.Beta("p_control", alpha=1, beta=1)
-    p_treatment = pm.Beta("p_treatment", alpha=1, beta=1)
+# Priors for probabilities
+p_control = pm.Beta("p_control", alpha=1, beta=1)
+p_treatment = pm.Beta("p_treatment", alpha=1, beta=1)
 
-    # Observed data
-    control_data = data[data['version'] == 'gate_30']['retention_7']
-    treatment_data = data[data['version'] == 'gate_40']['retention_7']
+# Observed data
+control_data = data[data['version'] == 'gate_30']['retention_7']
+treatment_data = data[data['version'] == 'gate_40']['retention_7']
 
-    obs_control = pm.Binomial("obs_control", n=len(control_data), p=p_control, observed=control_data.sum())
-    obs_treatment = pm.Binomial("obs_treatment", n=len(treatment_data), p=p_treatment, observed=treatment_data.sum())
+obs_control = pm.Binomial("obs_control", n=len(control_data), p=p_control, observed=control_data.sum())
+obs_treatment = pm.Binomial("obs_treatment", n=len(treatment_data), p=p_treatment, observed=treatment_data.sum())
 
-    # Difference in probabilities
-    diff_retention7 = pm.Deterministic("diff_retention_7", p_treatment - p_control)
+# Difference in probabilities
+diff_retention7 = pm.Deterministic("diff_retention_7", p_treatment - p_control)
 
-    # Sampling
-    retention7_trace = pm.sample(2000, return_inferencedata=True)
-    # Analyze and visualyze 
+# Sampling
+retention7_trace = pm.sample(2000, return_inferencedata=True)
+# Analyze and visualyze 
 import arviz as az
 
 # Posterior summaries
